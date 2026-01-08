@@ -120,6 +120,8 @@ function intervalToCron(intervalMs: number): string | null {
   if (minutes === 360) return '0 */6 * * *';       // Every 6 hours
   if (minutes === 720) return '0 */12 * * *';      // Every 12 hours
   if (minutes === 1440) return '0 0 * * *';        // Once a day (midnight)
+  if (minutes === 10080) return '0 0 * * 0';       // Once a week (Sunday midnight)
+  if (minutes === 20160) return '0 0 1,15 * *';    // Every two weeks (1st and 15th)
 
   // Default: convert to nearest minute interval
   return `*/${Math.max(1, Math.round(minutes))} * * * *`;
@@ -235,7 +237,17 @@ ${changelogText}`;
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) return null;
 
-  return JSON.parse(text);
+  // Try to extract JSON from the response (sometimes Gemini adds extra text)
+  try {
+    return JSON.parse(text);
+  } catch {
+    // Try to find JSON object in the text
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    return null;
+  }
 }
 
 async function generateTTSAudio(text: string, voice: string = 'Charon'): Promise<Buffer | null> {

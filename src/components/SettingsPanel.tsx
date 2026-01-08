@@ -19,6 +19,8 @@ const INTERVAL_OPTIONS = [
   { value: 7200000, label: '2 hours' },
   { value: 21600000, label: '6 hours' },
   { value: 86400000, label: '24 hours' },
+  { value: 604800000, label: '1 week' },
+  { value: 1209600000, label: '2 weeks' },
 ];
 
 const NOTIFICATION_INTERVALS = [
@@ -30,6 +32,8 @@ const NOTIFICATION_INTERVALS = [
   { value: 21600000, label: 'Every 6 hours' },
   { value: 43200000, label: 'Every 12 hours' },
   { value: 86400000, label: 'Once a day' },
+  { value: 604800000, label: 'Once a week' },
+  { value: 1209600000, label: 'Every two weeks' },
 ];
 
 export function SettingsPanel({ refreshInterval, onRefreshIntervalChange, defaultTheme, onDefaultThemeChange }: SettingsPanelProps) {
