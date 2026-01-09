@@ -66,6 +66,7 @@ Automatic emails when new versions are detected, including:
 - HTML-formatted summary
 - Categorized changes with severity indicators
 - Audio file attachment (WAV format)
+- **Scheduled Summaries** - Option to send emails on every check, not just new versions
 
 ### Changelog Chat
 Ask questions about any changelog versions using the AI assistant:
@@ -142,7 +143,7 @@ Ask questions about any changelog versions using the AI assistant:
 
 ```bash
 # Clone the repository
-git clone https://github.com/promptadvisers/changelog-master.git
+git clone https://github.com/earlyaidopters/changelog-master.git
 cd changelog-master
 
 # Install dependencies
@@ -230,9 +231,10 @@ When you have multiple sources:
 
 1. Click the **gear icon** (⚙️) for Settings
 2. Toggle **"Notify me when a new version is released"**
-3. Select check frequency (e.g., "Every hour")
-4. Choose a voice for audio attachments
-5. Click **"Send Demo Email"** to test
+3. Optionally enable **"Send email on every check"** for scheduled summaries (even without new versions)
+4. Select check frequency (e.g., "Every hour", "Once a week", "Every two weeks")
+5. Choose a voice for audio attachments
+6. Click **"Send Demo Email"** to test
 
 ### Chatting About Changelogs
 
@@ -368,6 +370,8 @@ The monitoring system uses `node-cron` to check for new versions:
 | Every hour | `0 * * * *` | `:00` each hour |
 | Every 6 hours | `0 */6 * * *` | `00:00, 06:00, 12:00, 18:00` |
 | Once a day | `0 0 * * *` | Midnight |
+| Once a week | `0 0 * * 0` | Sunday at midnight |
+| Every two weeks | `0 0 1,15 * *` | 1st and 15th of month |
 
 When a new version is detected:
 
